@@ -118,13 +118,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 child: ElevatedButton(
                   child: const Text('Register'),
                   onPressed: () {
-                   dynamic response = service.register(
-                        nameController.text,
-                        surnameController.text,
-                        emailAddressController.text,
-                        passwordController.text,
-                        phoneNumberController.text);
-                   print(response.toString());
+                    dynamic emailVerify = service.responseHandler(
+                      service.sendEmailForVerify(emailAddressController.text),
+                      "testId"
+                    );
+                    print(emailVerify);
                   },
                 )),
             Row(
