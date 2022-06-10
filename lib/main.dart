@@ -1,3 +1,4 @@
+import 'package:apti_service/interfaces/login_interface.dart';
 import 'package:apti_service/services/api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,11 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  Api service = Api();
+  TextEditingController surnameController = TextEditingController();
+  TextEditingController emailAddressController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+
+  final Api service = Api();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +67,27 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 controller: nameController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'User Name',
+                  labelText: 'Name',
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                controller: surnameController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Surname',
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                controller: emailAddressController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Email Address',
                 ),
               ),
             ),
@@ -77,29 +102,31 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 ),
               ),
             ),
-            TextButton(
-              onPressed: () {
-
-              },
-              child: const Text('Forgot Password',),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                controller: phoneNumberController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Phone Number',
+                ),
+              ),
             ),
             Container(
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
-                  child: const Text('Login'),
+                  child: const Text('Register'),
                   onPressed: () {
-                    print(nameController.text);
-                    print(passwordController.text);
-                    dynamic response = service.login(nameController.text, passwordController.text);
-                   if (response['ErrorCode'] == null) {
-                     print('Success');
-                   }else{
-                     print('Error');
-                   }
+                   dynamic response = service.register(
+                        nameController.text,
+                        surnameController.text,
+                        emailAddressController.text,
+                        passwordController.text,
+                        phoneNumberController.text);
+                   print(response.toString());
                   },
-                )
-            ),
+                )),
             Row(
               children: <Widget>[
                 const Text('Does not have account?'),
@@ -116,10 +143,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
             ),
             TextButton(
-              onPressed: () {
-
-              },
-              child: const Text('Forgot Password',),
+              onPressed: () {},
+              child: const Text(
+                'Forgot Password',
+              ),
             ),
           ],
         ));
