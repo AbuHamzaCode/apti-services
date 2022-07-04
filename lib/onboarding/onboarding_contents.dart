@@ -27,4 +27,10 @@ List<OnboardingContents> contents = [
     desc:
     "Take control of notifications, collaborate live or on your own time.",
   ),
+  OnboardingContents(
+    title: "Get notified when work happens",
+    image: "assets/images/image2.png",
+    desc:
+    "Take control of notifications, collaborate live or on your own time.",
+  ),
 ];

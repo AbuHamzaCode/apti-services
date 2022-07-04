@@ -14,7 +14,12 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final _controller = PageController();
   int _currentPage = 0;
-  List colors = [Color(0xffDAD3C8), Color(0xffFFE5DE), Color(0xffDCF6E6)];
+  List colors = [
+    Color(0xffDAD3C8),
+    Color(0xffFFE5DE),
+    Color(0xffDCF6E6),
+    Color(0xffDAD3C8)
+  ];
 
   AnimatedContainer _buildDots({int? index}) {
     return AnimatedContainer(
@@ -26,9 +31,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         color: const Color(0xFF000000),
       ),
       margin: const EdgeInsets.only(right: 5),
-      height: 10,
+      height: _currentPage == index ? 15 : 10,
       curve: Curves.easeIn,
-      width: _currentPage == index ? 20 : 10,
+      width: _currentPage == index ? 15 : 10,
     );
   }
 
@@ -53,7 +58,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 itemCount: contents.length,
                 itemBuilder: (context, i) {
                   return Container(
-                    // color: colors[i],
                     child: Padding(
                       padding: const EdgeInsets.all(40.0),
                       child: Column(
@@ -106,23 +110,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                   _currentPage + 1 == contents.length
-                      ? Padding(
-                          padding: const EdgeInsets.all(30),
-                          child: ElevatedButton(
-                            onPressed: () => goToHome(context),
-                            child: Text("START"),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.black,
-                              shape: new RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
+                      ? Container(
+                          margin: const EdgeInsets.only(bottom: 40),
+                          child: Padding(
+                            padding: const EdgeInsets.all(30),
+                            child: ElevatedButton(
+                              onPressed: () => goToHome(context),
+                              child: Text("START"),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.black,
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: (width <= 550)
+                                    ? EdgeInsets.symmetric(
+                                        horizontal: 100, vertical: 20)
+                                    : EdgeInsets.symmetric(
+                                        horizontal: width * 0.2, vertical: 25),
+                                textStyle: TextStyle(
+                                    fontSize: (width <= 550) ? 13 : 17),
                               ),
-                              padding: (width <= 550)
-                                  ? EdgeInsets.symmetric(
-                                      horizontal: 100, vertical: 20)
-                                  : EdgeInsets.symmetric(
-                                      horizontal: width * 0.2, vertical: 25),
-                              textStyle:
-                                  TextStyle(fontSize: (width <= 550) ? 13 : 17),
                             ),
                           ),
                         )
@@ -149,13 +156,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       ? EdgeInsets.symmetric(
                                           horizontal: 100, vertical: 20)
                                       : EdgeInsets.symmetric(
-                                          horizontal: width * 0.2, vertical: 25),
+                                          horizontal: width * 0.2,
+                                          vertical: 25),
                                   textStyle: TextStyle(
                                       fontSize: (width <= 550) ? 13 : 17),
                                 ),
                               ),
                               TextButton(
-                                onPressed: () => goToHome(context),
+                                onPressed: () => _controller.jumpToPage(3),
                                 child: Text(
                                   "SKIP",
                                   style: TextStyle(color: Colors.black),
@@ -181,6 +189,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void goToHome(context) => Navigator.of(context).pushReplacement(
-    MaterialPageRoute(builder: (_) => HomePage()),
-  );
+        MaterialPageRoute(builder: (_) => HomePage()),
+      );
 }
