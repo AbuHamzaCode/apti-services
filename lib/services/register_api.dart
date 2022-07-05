@@ -55,7 +55,7 @@ class RegisterApi {
     if (response.statusCode == 200)
       print("Verify code is correct");
     else
-      print("Failed: Verify code not correct");
+      print("Failed: Verify code not correct -> ${response.statusCode}");
 
     return VerifyEmailVerificationCode.fromJson(response.data);
   }

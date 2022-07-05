@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: OnboardingScreen(),
+      home: MyHomePage(email: 'email.@gmial.com',attemptId: "sdsd13322343243dfss231123dwddd",),
     );
   }
 }
